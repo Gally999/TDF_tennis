@@ -41,54 +41,41 @@ class Player {
 const player1 = new Player();
 const player2 = new Player();
 
+// Handle the scoring of the players
+function playerScoring(scoringPlayer, otherPlayer) {
+    if (scoringPlayer.points < 40) {
+        scoringPlayer.scores();
+        
+    } else if (scoringPlayer.points === 40 && otherPlayer.points < 40) {
+        scoringPlayer.hasWon = true;
+        
+    } else if (scoringPlayer.points === 40 && otherPlayer.points === 40) {
+        if (scoringPlayer.hasAdvantage === false && otherPlayer.hasAdvantage === false) {
+            scoringPlayer.hasAdvantage = true;
+            
+        } else if (scoringPlayer.hasAdvantage === true && otherPlayer.hasAdvantage === false) {
+            scoringPlayer.hasWon = true;
+            
+        } else if (scoringPlayer.hasAdvantage === false && otherPlayer.hasAdvantage === true) {
+            otherPlayer.hasAdvantage = false;
+            
+        }
+    }
+}
+
 function playGame(player1, player2) {
     
     while (player1.hasWon === false && player2.hasWon === false) {
 
         let randomNumber = Math.floor(Math.random() * 2);
-        
+
         // handling the scoring of player1
         if (randomNumber === 0) {
-            if (player1.points < 40) {
-                player1.scores();
-                
-            } else if (player1.points === 40 && player2.points < 40) {
-                player1.hasWon = true;
+            playerScoring(player1, player2);
 
-                // handling equality
-            } else if (player1.points === 40 && player2.points === 40) {
-                if (player1.hasAdvantage === false && player2.hasAdvantage === false) {
-                    player1.hasAdvantage = true;
-                    
-                } else if (player1.hasAdvantage === true && player2.hasAdvantage === false) {
-                    player1.hasWon = true;
-                    
-                } else if (player1.hasAdvantage === false && player2.hasAdvantage === true) {
-                    player2.hasAdvantage = false;
-                    
-                }
-            }
-            // handling the scoring of player2
+        // handling the scoring of player2
         } else if (randomNumber === 1) { 
-            if (player2.points < 40){
-                player2.scores();
-                
-            } else if (player2.points === 40 && player1.points < 40) {
-                player2.hasWon = true;
-                
-                // handling equality
-            } else if (player1.points === 40 && player2.points === 40) {
-                if (player2.hasAdvantage === false && player1.hasAdvantage === false) {
-                    player2.hasAdvantage = true;
-                    
-                } else if (player2.hasAdvantage === true && player1.hasAdvantage === false) {
-                    player2.hasWon = true;
-                    
-                } else if (player2.hasAdvantage === false && player1.hasAdvantage === true) {
-                    player1.hasAdvantage = false;
-                    
-                }
-            }
+            playerScoring(player2, player1);
         }
 
     }
