@@ -14,7 +14,6 @@
 // Definition of a class for the players
 class Player {
     points = 0;
-    hasBall = false;
     hasAdvantage = false;
     hasWon = false;
 
